@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import { Lock, Mail, ChevronRight, Fingerprint, Activity } from 'lucide-react'
@@ -16,7 +16,7 @@ export function Login() {
   const [error, setError] = useState<string | null>(null)
   
   const { session, profile } = useAuth()
-  const navigate = useNavigate()
+
 
   if (session && profile) {
     if (profile.role === 'hr') return <Navigate to="/hr" />

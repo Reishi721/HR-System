@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { Plus, Users, Edit, Trash2, MoreHorizontal, Download, Eye } from 'lucide-react'
+import { Plus, Users, Edit, Trash2, MoreHorizontal, Download } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -21,7 +21,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Card, CardContent } from '@/components/ui/card'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
 import { supabase, supabaseAdmin } from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
 import { exportEmployeesToExcel } from '@/lib/excel-export'
@@ -94,7 +94,7 @@ export function Employees() {
   })
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<EmployeeForm>({
-    resolver: zodResolver(employeeSchema),
+    resolver: zodResolver(employeeSchema) as any,
     defaultValues: { role: 'employee', status: 'active', base_salary: 0, meal_allowance: 0, transport_allowance: 0 },
   })
 
@@ -102,11 +102,8 @@ export function Employees() {
 
   const saveMutation = useMutation({
     mutationFn: async (values: EmployeeForm) => {
-      // Destructure email out — it's only needed for creating the auth user,
-      // not for updating the profiles table.
       const { email, ...profileData } = values
 
-      // Sanitize empty strings to null for date/optional FK fields
       const sanitized = Object.fromEntries(
         Object.entries(profileData).map(([key, val]) => [
           key,
@@ -117,11 +114,9 @@ export function Employees() {
       )
 
       if (editing) {
-        // ── UPDATE existing profile ──
         const { error } = await supabase.from('profiles').update(sanitized).eq('id', editing.id)
         if (error) throw error
       } else {
-        // ── CREATE new employee ──
         if (!email) throw new Error('Email wajib diisi untuk membuat akun karyawan baru.')
 
         if (!supabaseAdmin) {
@@ -131,21 +126,18 @@ export function Employees() {
           )
         }
 
-        // 1. Create auth user (trigger on auth.users will auto-create profile row)
         const tempPassword = `HR-${crypto.randomUUID().slice(0, 8)}!`
         const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
           email,
           password: tempPassword,
-          email_confirm: true, // auto-confirm so HR doesn't need to wait
+          email_confirm: true,
           user_metadata: { full_name: values.full_name, role: values.role },
         })
         if (authError) throw authError
         if (!authData.user) throw new Error('Gagal membuat akun user.')
 
-        // 2. Wait briefly for the DB trigger to create the profile row
         await new Promise(r => setTimeout(r, 800))
 
-        // 3. Update the auto-created profile with all the additional fields
         const { error: profileError } = await supabase
           .from('profiles')
           .update(sanitized)
@@ -199,7 +191,7 @@ export function Employees() {
         return (
           <div className="flex items-center gap-3">
             <Avatar className="h-9 w-9">
-              <AvatarImage src={emp.avatar_url} alt={emp.full_name} className="object-cover" />
+              <AvatarImage src={emp.avatar_url || undefined} alt={emp.full_name} className="object-cover" />
               <AvatarFallback className="bg-gradient-to-br from-indigo-400 to-violet-500 text-white text-sm font-bold">
                 {emp.full_name[0]?.toUpperCase()}
               </AvatarFallback>
@@ -301,7 +293,7 @@ export function Employees() {
           <DialogHeader>
             <DialogTitle>{editing ? `Edit: ${editing.full_name}` : 'Tambah Karyawan'}</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit(d => saveMutation.mutate(d))} className="space-y-6 mt-2">
+          <form onSubmit={handleSubmit((d) => saveMutation.mutate(d as unknown as EmployeeForm))} className="space-y-6 mt-2">
             {/* Avatar */}
             <div className="flex items-start gap-4">
               <div className="shrink-0">

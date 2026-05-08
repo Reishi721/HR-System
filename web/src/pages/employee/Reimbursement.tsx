@@ -51,7 +51,7 @@ export function ReimbursementEmployee() {
   })
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<KlaimForm>({
-    resolver: zodResolver(klaimSchema),
+    resolver: zodResolver(klaimSchema) as any,
     defaultValues: { category: 'transport' }
   })
   const attachmentUrl = watch('attachment_url')
@@ -130,7 +130,7 @@ export function ReimbursementEmployee() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle>Form Klaim Reimbursement</DialogTitle></DialogHeader>
-          <form onSubmit={handleSubmit(d => submitMutation.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit(d => submitMutation.mutate(d as unknown as KlaimForm))} className="space-y-4 mt-2">
             <div>
               <Label>Kategori Klaim *</Label>
               <Select onValueChange={v => setValue('category', v as any)} defaultValue="transport">

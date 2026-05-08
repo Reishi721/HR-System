@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { StatusBadge } from '@/components/ui/StatusBadge'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'

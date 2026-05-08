@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { Landmark, CheckCircle, XCircle, Plus, Eye, Trash2, MoreHorizontal } from 'lucide-react'
+import { Landmark, CheckCircle, XCircle, Plus, Trash2, MoreHorizontal } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -9,7 +9,6 @@ import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import { StatsCard } from '@/components/ui/StatsCard'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,7 +19,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { supabase } from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
 import { formatCurrency } from '@/lib/payroll-calculator'
-import type { EmployeeLoan, Profile } from '@/types/database'
+import type { Profile } from '@/types/database'
 
 const loanSchema = z.object({
   user_id: z.string().min(1, 'Pilih karyawan'),
@@ -34,7 +33,6 @@ export function Loans() {
   const { toast } = useToast()
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
-  const [rejectId, setRejectId] = useState<string | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<any | null>(null)
 
   const { data: loans, isLoading } = useQuery({
@@ -57,7 +55,7 @@ export function Loans() {
   })
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<LoanForm>({
-    resolver: zodResolver(loanSchema),
+    resolver: zodResolver(loanSchema) as any,
     defaultValues: { installment_count: 12 }
   })
   const watchedAmount = watch('amount') || 0
@@ -90,18 +88,7 @@ export function Loans() {
     onError: (err: any) => toast({ title: 'Gagal', description: err.message, variant: 'destructive' }),
   })
 
-  const rejectMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('employee_loans').update({ status: 'rejected' }).eq('id', id)
-      if (error) throw error
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['loans-hr'] })
-      toast({ title: 'Ditolak', description: 'Pengajuan pinjaman ditolak.' })
-      setRejectId(null)
-    },
-    onError: (err: any) => toast({ title: 'Gagal', description: err.message, variant: 'destructive' }),
-  })
+
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -189,7 +176,15 @@ export function Loans() {
                 className="h-7 gap-1 bg-emerald-500 hover:bg-emerald-600 text-white text-xs">
                 <CheckCircle className="h-3.5 w-3.5" /> Cairkan
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setRejectId(row.original.id)}
+              <Button size="sm" variant="outline" onClick={() => {
+                if (confirm('Tolak pengajuan ini?')) {
+                  supabase.from('employee_loans').update({ status: 'rejected' }).eq('id', row.original.id)
+                    .then(() => {
+                      queryClient.invalidateQueries({ queryKey: ['loans-hr'] })
+                      toast({ title: 'Ditolak', description: 'Pengajuan pinjaman ditolak.' })
+                    })
+                }
+              }}
                 className="h-7 gap-1 text-red-600 border-red-200 hover:bg-red-50 text-xs">
                 <XCircle className="h-3.5 w-3.5" /> Tolak
               </Button>
@@ -250,7 +245,7 @@ export function Loans() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Input Pinjaman Baru</DialogTitle></DialogHeader>
-          <form onSubmit={handleSubmit(d => addMutation.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit((d) => addMutation.mutate(d as unknown as LoanForm))} className="space-y-4 mt-2">
             <div>
               <Label>Karyawan *</Label>
               <Select onValueChange={v => setValue('user_id', v)}>

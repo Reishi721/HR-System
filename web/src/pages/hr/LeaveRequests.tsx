@@ -88,7 +88,7 @@ export function LeaveRequests() {
         </div>
       ),
     },
-    { accessorKey: 'reason', header: 'Alasan', cell: ({ getValue }) => <span className="text-sm text-slate-600 line-clamp-1">{getValue() || '—'}</span> },
+    { accessorKey: 'reason', header: 'Alasan', cell: ({ getValue }) => <span className="text-sm text-slate-600 line-clamp-1">{(getValue() as string) || '—'}</span> },
     {
       id: 'location',
       header: 'Lokasi GPS',

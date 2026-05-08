@@ -6,7 +6,7 @@ import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { StatsCard } from '@/components/ui/StatsCard'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -179,7 +179,7 @@ export function AttendancePage() {
       </Card>
 
       {/* Photo Modal */}
-      <Dialog open={!!selectedPhoto} onOpenChange={(open) => !open && setSelectedPhoto(null)}>
+      <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
         <DialogContent className="max-w-md p-0 overflow-hidden bg-transparent border-none shadow-none flex items-center justify-center">
           <DialogHeader className="hidden">
             <DialogTitle>Foto Kehadiran</DialogTitle>

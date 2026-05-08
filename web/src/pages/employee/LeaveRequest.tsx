@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { Calendar, Plus, MapPin, Search } from 'lucide-react'
+import { Calendar, Plus, MapPin } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -14,7 +14,7 @@ import { StatsCard } from '@/components/ui/StatsCard'
 import { FileUpload } from '@/components/ui/FileUpload'
 import { DateRangePicker } from '@/components/ui/DateRangePicker'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -63,7 +63,7 @@ export function LeaveRequestEmployee() {
   })
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<LeaveForm>({
-    resolver: zodResolver(leaveSchema),
+    resolver: zodResolver(leaveSchema) as any,
     defaultValues: { type: 'cuti' }
   })
   const leaveType = watch('type')
@@ -153,7 +153,7 @@ export function LeaveRequestEmployee() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Form Pengajuan Cuti</DialogTitle></DialogHeader>
-          <form onSubmit={handleSubmit(d => submitMutation.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit(d => submitMutation.mutate(d as unknown as LeaveForm))} className="space-y-4 mt-2">
             <div>
               <Label>Jenis Pengajuan *</Label>
               <Select onValueChange={v => setValue('type', v as any)} defaultValue={leaveType}>

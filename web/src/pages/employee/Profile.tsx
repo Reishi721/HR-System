@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { User, Lock, Upload } from 'lucide-react'
+import { User, Lock } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -36,7 +36,7 @@ export function ProfileEmployee() {
   const [pwdConfirm, setPwdConfirm] = useState('')
 
   const { register, handleSubmit, setValue, watch, formState: { isSubmitting } } = useForm<ProfileForm>({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(profileSchema) as any,
     values: {
       phone: profile?.phone || '',
       address: profile?.address || '',
@@ -91,12 +91,12 @@ export function ProfileEmployee() {
               <CardTitle className="text-base font-semibold">Informasi Pribadi & Kontak</CardTitle>
             </CardHeader>
             <CardContent className="pt-6">
-              <form onSubmit={handleSubmit(d => updateProfile.mutate(d))} className="space-y-6">
+              <form onSubmit={handleSubmit(d => updateProfile.mutate(d as unknown as ProfileForm))} className="space-y-6">
                 
                 {/* Avatar & Upload - side by side */}
                 <div className="flex items-center gap-5 pb-6 mb-6 border-b border-slate-100">
                   <Avatar className="h-20 w-20 sm:h-24 sm:w-24 shadow-sm bg-white border-2 border-indigo-50 shrink-0">
-                    <AvatarImage src={avatarUrl} alt="Avatar" className="object-cover" />
+                    <AvatarImage src={avatarUrl || undefined} alt="Avatar" className="object-cover" />
                     <AvatarFallback className="bg-gradient-to-br from-indigo-100 to-violet-200 text-indigo-700 text-2xl sm:text-3xl font-bold">
                       {profile?.full_name?.[0]?.toUpperCase()}
                     </AvatarFallback>

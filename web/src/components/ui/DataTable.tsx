@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react'
-import { createPortal } from 'react-dom';
+import { useState, useEffect } from 'react'
+
 import {
   useReactTable,
   getCoreRowModel,
@@ -17,7 +17,7 @@ import {
 } from '@tanstack/react-table'
 import {
   ChevronUp, ChevronDown, ChevronsUpDown, Search, ChevronLeft, ChevronRight,
-  Settings2, Download, FilterX, ListFilter, Maximize2
+  Settings2, Download, FilterX, Maximize2
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -32,7 +32,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 
 // Advanced fuzzy filter could be added, but standard includes string works well
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, _addMeta) => {
   const itemValue = row.getValue(columnId)
   if (itemValue == null) return false
   return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
@@ -51,7 +51,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
-  columns, data, searchKey, searchPlaceholder = 'Search all columns...', onExport,
+  columns, data, searchKey: _searchKey, searchPlaceholder = 'Search all columns...', onExport,
   loading, emptyMessage = 'No data found.', pageSize = 10, toolbar,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
   }
 
   // ESC key handler for fullscreen
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isFullscreen) return
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsFullscreen(false)

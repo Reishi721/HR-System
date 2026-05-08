@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 import { AppShell } from '@/components/layout/AppShell'
 import { StatsCard } from '@/components/ui/StatsCard'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { formatCurrency } from '@/lib/payroll-calculator'
-import type { Attendance, Overtime, LeaveRequest, Announcement } from '@/types/database'
+import type { Attendance, Announcement } from '@/types/database'
 
 export function EmployeeDashboard() {
   const { profile } = useAuth()
@@ -153,7 +153,7 @@ export function EmployeeDashboard() {
           </CardHeader>
           <CardContent className="flex flex-col items-center text-center">
             <Avatar className="h-24 w-24 shadow-md mb-4 bg-white p-1 border-4 border-white">
-              <AvatarImage src={profile.avatar_url} alt={profile.full_name} className="object-cover rounded-full" />
+              <AvatarImage src={profile?.avatar_url || undefined} alt={profile?.full_name || 'Profile'} className="object-cover rounded-full" />
               <AvatarFallback className="bg-gradient-to-br from-indigo-200 to-violet-300 text-white text-3xl font-bold rounded-full">
                 {profile?.full_name?.[0]?.toUpperCase()}
               </AvatarFallback>

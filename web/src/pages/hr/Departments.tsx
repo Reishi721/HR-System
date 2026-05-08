@@ -76,8 +76,8 @@ export function Departments() {
     },
   })
 
-  const deptForm = useForm<DeptForm>({ resolver: zodResolver(deptSchema) })
-  const posForm = useForm<PosForm>({ resolver: zodResolver(posSchema) })
+  const deptForm = useForm<DeptForm>({ resolver: zodResolver(deptSchema) as any })
+  const posForm = useForm<PosForm>({ resolver: zodResolver(posSchema) as any })
 
   const saveDept = useMutation({
     mutationFn: async (values: DeptForm) => {
@@ -231,7 +231,7 @@ export function Departments() {
       <Dialog open={deptOpen} onOpenChange={setDeptOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>{editingDept ? 'Edit Departemen' : 'Tambah Departemen'}</DialogTitle></DialogHeader>
-          <form onSubmit={deptForm.handleSubmit(d => saveDept.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={deptForm.handleSubmit(d => saveDept.mutate(d as unknown as DeptForm))} className="space-y-4 mt-2">
             <div>
               <Label>Perusahaan *</Label>
               <Select onValueChange={v => deptForm.setValue('company_id', v)} defaultValue={editingDept?.company_id}>
@@ -253,7 +253,7 @@ export function Departments() {
       <Dialog open={posOpen} onOpenChange={setPosOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>{editingPos ? 'Edit Jabatan' : 'Tambah Jabatan'}</DialogTitle></DialogHeader>
-          <form onSubmit={posForm.handleSubmit(d => savePos.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={posForm.handleSubmit(d => savePos.mutate(d as unknown as PosForm))} className="space-y-4 mt-2">
             <div>
               <Label>Departemen *</Label>
               <Select onValueChange={v => posForm.setValue('department_id', v)} defaultValue={editingPos?.department_id || selectedDept?.id}>

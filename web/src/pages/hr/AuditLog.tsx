@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { BookOpen, Search, Filter } from 'lucide-react'
+import { BookOpen, Filter } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'

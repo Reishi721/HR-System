@@ -51,7 +51,7 @@ export function LoansEmployee() {
   const hasActiveLoan = loans?.some(l => l.status === 'active' || l.status === 'pending' || l.status === 'approved')
 
   const { register, handleSubmit, reset, watch, formState: { errors, isSubmitting } } = useForm<LoanForm>({
-    resolver: zodResolver(loanSchema),
+    resolver: zodResolver(loanSchema) as any,
     defaultValues: { installment_count: 6 }
   })
 
@@ -150,7 +150,7 @@ export function LoansEmployee() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Form Pengajuan Kasbon</DialogTitle></DialogHeader>
-          <form onSubmit={handleSubmit(d => submitMutation.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit(d => submitMutation.mutate(d as unknown as LoanForm))} className="space-y-4 mt-2">
             <div>
               <Label>Tujuan Pinjaman *</Label>
               <Input {...register('purpose')} className="mt-1.5" placeholder="Keperluan pendidikan, medis, dsb..." />

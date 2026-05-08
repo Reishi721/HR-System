@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx'
-import { formatCurrency } from './payroll-calculator'
+
 import type { Payslip, Profile, Attendance } from '@/types/database'
 
 // ================================================================

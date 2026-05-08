@@ -168,7 +168,7 @@ export function ReimbursementAdmin() {
         </CardContent>
       </Card>
 
-      <Dialog open={!!rejectId} onOpenChange={(open) => !open && setRejectId(null)}>
+      <Dialog open={!!rejectId} onOpenChange={() => setRejectId(null)}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader><DialogTitle>Tolak Reimbursement</DialogTitle></DialogHeader>
           <div className="py-4">
@@ -190,7 +190,7 @@ export function ReimbursementAdmin() {
       </Dialog>
 
       {/* Attachment Modal */}
-      <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-4xl p-0 bg-transparent border-none shadow-none flex items-center justify-center">
           <DialogHeader className="hidden">
             <DialogTitle>Bukti Attachment</DialogTitle>

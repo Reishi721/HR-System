@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Wallet, Download, CheckCircle, FileText, Lock } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { PageHeader } from '@/components/ui/PageHeader'
-import { StatusBadge } from '@/components/ui/StatusBadge'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
@@ -25,7 +25,7 @@ export function PayslipsEmployee() {
   })
 
   // To build PDF feature, wait until phase 4 generation completion, but leaving UI placeholder
-  const handleDownload = (id: string) => {
+  const handleDownload = (_id: string) => {
     alert('Fitur download PDF sedang dimplementasi di server. Silakan screenshot halaman detail ini untuk sementara.')
   }
 

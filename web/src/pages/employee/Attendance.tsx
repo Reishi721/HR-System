@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { Camera, MapPin, MapPinned, PlayCircle, StopCircle, Upload, CheckSquare } from 'lucide-react'
+import { Camera, MapPin, MapPinned, PlayCircle, StopCircle, CheckSquare } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'
@@ -26,7 +26,7 @@ export function EmployeeAttendance() {
 
   // Get current attendance status
   const today = new Date().toISOString().slice(0, 10)
-  const { data: todayAttendance, isLoading: todayLoading } = useQuery({
+  const { data: todayAttendance, isLoading: _todayLoading } = useQuery({
     queryKey: ['employee-today-attendance', profile?.id, today],
     queryFn: async () => {
       if (!profile?.id) return null
@@ -115,7 +115,7 @@ export function EmployeeAttendance() {
       const base64Data = photo.replace(/^data:image\/\w+;base64,/, '')
       const blob = new Blob([Buffer.from(base64Data, 'base64')], { type: 'image/jpeg' })
 
-      const { data: uploadData, error: uploadErr } = await supabase.storage.from('attendances').upload(`${profile.id}/${fileName}`, blob, { upsert: true })
+      const { error: uploadErr } = await supabase.storage.from('attendances').upload(`${profile.id}/${fileName}`, blob, { upsert: true })
       if (uploadErr) throw uploadErr
 
       const { data: publicUrlData } = supabase.storage.from('attendances').getPublicUrl(`${profile.id}/${fileName}`)

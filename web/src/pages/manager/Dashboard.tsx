@@ -8,7 +8,7 @@ import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
-import type { Attendance, LeaveRequest, Profile } from '@/types/database'
+import type { Attendance } from '@/types/database'
 
 export function ManagerDashboard() {
   const { profile } = useAuth()
@@ -76,7 +76,7 @@ export function ManagerDashboard() {
   const totalTeam = teamMembers?.length || 0
   const presentToday = todayAttendance?.filter(a => a.status === 'present').length || 0
   const lateToday = todayAttendance?.filter(a => a.status === 'late').length || 0
-  const absentToday = totalTeam - presentToday - lateToday
+
 
   return (
     <AppShell>

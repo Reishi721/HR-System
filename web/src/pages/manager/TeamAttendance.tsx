@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { type ColumnDef } from '@tanstack/react-table'
-import { CheckSquare, Search, Filter } from 'lucide-react'
+import { CheckSquare, Filter } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { DataTable } from '@/components/ui/DataTable'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+
 import { DatePicker } from '@/components/ui/DatePicker'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
-import type { Attendance } from '@/types/database'
+
 
 export function TeamAttendance() {
   const { profile } = useAuth()

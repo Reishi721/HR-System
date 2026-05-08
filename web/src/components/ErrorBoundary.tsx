@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { AlertOctagon, RefreshCcw, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Users, Clock, Calendar, DollarSign, TrendingUp, AlertCircle, CheckCircle, Building2 } from 'lucide-react'
+import { Users, Clock, Calendar, DollarSign, CheckCircle, LayoutDashboard } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts'
 import { AppShell } from '@/components/layout/AppShell'
 import { StatsCard } from '@/components/ui/StatsCard'
@@ -9,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { supabase } from '@/lib/supabase'
 import { formatCurrency } from '@/lib/payroll-calculator'
-import type { LeaveRequest, Profile } from '@/types/database'
+
 
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
@@ -102,7 +101,7 @@ export function HRDashboard() {
       <PageHeader
         title="Dashboard HR"
         description="Ringkasan aktivitas dan statistik HR hari ini"
-        icon={LayoutDashboard}
+        icon={LayoutDashboard as any}
         breadcrumbs={[{ label: 'HR Portal' }, { label: 'Dashboard' }]}
       />
 
@@ -263,11 +262,4 @@ export function HRDashboard() {
   )
 }
 
-function LayoutDashboard({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-    </svg>
-  )
-}
+

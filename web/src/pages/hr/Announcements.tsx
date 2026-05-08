@@ -9,7 +9,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
@@ -44,7 +44,7 @@ export function AnnouncementsAdmin() {
   })
 
   const { register, handleSubmit, reset, watch, setValue, formState: { errors, isSubmitting } } = useForm<AnnForm>({
-    resolver: zodResolver(annSchema),
+    resolver: zodResolver(annSchema) as any,
   })
 
   const broadcastMutation = useMutation({
@@ -163,7 +163,7 @@ export function AnnouncementsAdmin() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader><DialogTitle>Kirim Broadcast Baru</DialogTitle></DialogHeader>
-          <form onSubmit={handleSubmit(d => broadcastMutation.mutate(d))} className="space-y-4 mt-2">
+          <form onSubmit={handleSubmit(d => broadcastMutation.mutate(d as unknown as AnnForm))} className="space-y-4 mt-2">
             <div>
               <Label>Judul Pengumuman *</Label>
               <Input {...register('title')} className="mt-1.5" />
