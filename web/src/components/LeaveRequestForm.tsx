@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon, UploadCloud } from 'lucide-react'
-import { DateRange } from 'react-day-picker'
+
+// Define DateRange locally to avoid Vite pre-bundling export issues with react-day-picker v9
+export interface DateRange {
+  from: Date | undefined;
+  to?: Date | undefined;
+}
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/input' // wait, text-area is not installed. We'll use Input or div
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/hooks/use-toast'
 import { supabase } from '@/lib/supabase'
@@ -47,18 +51,32 @@ export function LeaveRequestForm({ userId }: { userId?: string }) {
 
     setLoading(true)
     try {
-      // Simulate Geolocation
+      // Simulate Geolocation for Web if location API is not used (Mobile will use native)
       const lat = -6.2088
       const lng = 106.8456
 
       let attachmentUrl = null
       if (file) {
-        // Upload logic would go here
-        attachmentUrl = `uploads/${Date.now()}_${file.name}`
+        // Upload logic
+        const fileExt = file.name.split('.').pop()
+        const fileName = `${userId}_${Date.now()}.${fileExt}`
+        const filePath = `medical/${fileName}`
+
+        const { error: uploadError } = await supabase.storage
+          .from('leave_attachments')
+          .upload(filePath, file)
+
+        if (uploadError) throw new Error("Gagal mengunggah file. " + uploadError.message)
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('leave_attachments')
+          .getPublicUrl(filePath)
+          
+        attachmentUrl = publicUrl
       }
 
       const { error } = await supabase.from('leave_requests').insert({
-        user_id: userId || 'some-user-uuid',
+        user_id: userId,
         type: leaveType,
         start_date: date.from.toISOString().split('T')[0],
         end_date: date.to.toISOString().split('T')[0],

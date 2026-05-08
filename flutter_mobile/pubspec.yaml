@@ -1,0 +1,68 @@
+name: hr_mobile
+description: A new Flutter HR System project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # === SUPABASE ===
+  supabase_flutter: ^2.12.4
+
+  # === STATE & NAVIGATION ===
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  go_router: ^14.8.1
+
+  # === UI ===
+  getwidget: ^4.0.0
+  flutter_animate: ^4.5.2
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
+
+  # === CHARTS & CALENDAR ===
+  fl_chart: ^0.69.2
+  syncfusion_flutter_calendar: ^27.2.5
+
+  # === LOCAL STORAGE ===
+  hive_ce: ^2.19.3
+  hive_ce_flutter: ^2.3.4
+  flutter_secure_storage: ^9.2.4
+  shared_preferences: ^2.5.5
+
+  # === FITUR HR NATIVE ===
+  geolocator: ^13.0.4
+  image_picker: ^1.2.2
+  local_auth: ^2.3.0
+  firebase_messaging: ^15.2.10
+  flutter_local_notifications: ^18.0.1
+  mobile_scanner: ^5.2.3
+  pdf: ^3.12.0
+  printing: ^5.14.3
+  syncfusion_flutter_xlsio: ^27.2.5
+
+  # === NETWORKING & UTILS ===
+  dio: ^5.9.2
+  connectivity_plus: ^6.1.5
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # === ERROR TRACKING ===
+  sentry_flutter: ^8.14.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.6.4   # ← tetap di 2.x, kompatibel dengan hive_ce_generator
+  freezed: ^2.5.8
+  json_serializable: ^6.9.5
+  hive_ce_generator: ^1.9.2    # ← pin ke 1.9.2, bukan 1.11.1
+
+flutter:
+  uses-material-design: true
