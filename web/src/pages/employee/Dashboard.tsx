@@ -71,7 +71,7 @@ export function EmployeeDashboard() {
         breadcrumbs={[{ label: 'Employee Space' }, { label: 'Dashboard' }]}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard 
           title="Kehadiran Hari Ini" 
           value={todayAttendance?.clock_in_time ? new Date(todayAttendance.clock_in_time).toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' }) : 'Belum'} 

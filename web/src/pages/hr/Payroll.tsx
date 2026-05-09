@@ -194,7 +194,7 @@ export function PayrollAdmin() {
         )}
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Total Gaji Bersih Terbayar" value={formatCurrency(stats.total)} icon={DollarSign} color="emerald" />
         <StatsCard title="Slip Di-generate" value={stats.count} icon={FileText} color="indigo" />
         <StatsCard title="Draft" value={stats.count - stats.published} icon={Save} color="amber" />

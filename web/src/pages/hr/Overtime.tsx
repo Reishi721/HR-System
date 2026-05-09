@@ -138,7 +138,7 @@ export function OvertimeAdmin() {
         breadcrumbs={[{ label: 'HR Portal' }, { label: 'Lembur' }]}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Total Pengajuan" value={stats.all} icon={ClipboardList} color="indigo" />
         <StatsCard title="Menunggu HR" value={stats.pending} icon={ClipboardList} color="amber" />
         <StatsCard title="Disetujui" value={stats.approved} icon={ClipboardList} color="emerald" />

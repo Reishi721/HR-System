@@ -149,7 +149,7 @@ export function ReimbursementAdmin() {
         breadcrumbs={[{ label: 'HR Portal' }, { label: 'Reimbursement' }]}
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Total Nominal Pending" value={formatCurrency(stats.pendingAmount)} icon={Receipt} color="amber" />
         <StatsCard title="Klaim Pending" value={stats.pending} icon={Receipt} color="violet" />
         <StatsCard title="Disetujui (Belum Dibayar)" value={stats.approved} icon={CheckCircle} color="indigo" />

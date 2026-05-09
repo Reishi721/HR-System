@@ -88,7 +88,7 @@ export function ManagerDashboard() {
       />
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 stagger">
         <StatsCard title="Anggota Tim" value={totalTeam} icon={Users} color="indigo" description="Bawahan langsung" />
         <StatsCard title="Hadir Hari Ini" value={presentToday} icon={CheckCircle} color="emerald" description="Tepat waktu" />
         <StatsCard title="Terlambat" value={lateToday} icon={Clock} color="amber" description="Hari ini" />

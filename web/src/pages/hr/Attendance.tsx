@@ -136,7 +136,7 @@ export function AttendancePage() {
       />
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Total Rekaman" value={stats.total} icon={Clock} color="indigo" />
         <StatsCard title="Hadir" value={stats.present} icon={Clock} color="emerald" />
         <StatsCard title="Terlambat" value={stats.late} icon={Clock} color="amber" />

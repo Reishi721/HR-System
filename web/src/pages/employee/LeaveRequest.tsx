@@ -132,7 +132,7 @@ export function LeaveRequestEmployee() {
         }
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Sisa Saldo Cuti" value={(balance?.total_allocated || 0) - (balance?.total_used || 0)} icon={Calendar} color="emerald" description={`Dari total ${balance?.total_allocated} hari`} />
         <StatsCard title="Cuti Digunakan" value={balance?.total_used || 0} icon={Calendar} color="amber" />
         <StatsCard title="Menunggu Approval" value={requests?.filter(r => r.status.includes('pending')).length || 0} icon={Calendar} color="indigo" />

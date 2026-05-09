@@ -184,7 +184,7 @@ export function DataTable<TData, TValue>({
 
   const tableContent = (
     <div className={cn(
-      "flex flex-col gap-4 transition-all duration-300",
+      "flex flex-col gap-4 transition-all duration-300 w-full max-w-full",
       isFullscreen ? "h-full" : ""
     )}>
       {/* Advanced Toolbar */}

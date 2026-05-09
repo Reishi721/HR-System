@@ -207,7 +207,7 @@ export function Contracts() {
         }
       />
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 stagger">
         <StatsCard title="Total Kontrak" value={stats.total} icon={FileSignature} color="indigo" />
         <StatsCard title="Kontrak Aktif" value={stats.active} icon={FileSignature} color="emerald" />
         <StatsCard title="Akan Habis < 30 Hari" value={stats.expiringSoon} icon={AlertTriangle} color="amber" />
